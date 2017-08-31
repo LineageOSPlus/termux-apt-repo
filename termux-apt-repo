@@ -2,8 +2,8 @@
 
 import datetime, hashlib, os, re, shutil, subprocess, sys
 
-DISTRIBUTION = 'termux'
-COMPONENT = 'extras'
+DISTRIBUTION = 'stable'
+COMPONENT = 'main'
 supported_arches = ['all', 'arm', 'i686', 'aarch64', 'x86_64']
 encountered_arches = set()
 
@@ -73,7 +73,7 @@ release_file = open(release_file_path, 'w')
 print("Codename: termux", file=release_file)
 print("Version: 1", file=release_file)
 print("Architectures: " + ' '.join(encountered_arches), file=release_file)
-print("Description: Extras repository", file=release_file)
+print("Description: Main repository", file=release_file)
 print("Suite: termux", file=release_file)
 print("Date: " + datetime.datetime.utcnow().strftime('%a, %d %b %Y %H:%M:%S UTC'), file=release_file)
 print("SHA256:", file=release_file)
@@ -122,7 +122,7 @@ for arch in encountered_arches:
 
 release_file.close()
 
-if False:
+if True:
     print('Signing with gpg...')
     subprocess.check_call(['gpg --pinentry-mode loopback --digest-algo SHA256 --clearsign -o '
         + distribution_path + '/InRelease ' + distribution_path + '/Release'],
@@ -136,5 +136,5 @@ print('')
 print('Users can then access the repo by adding a file at')
 print('   $PREFIX/etc/apt/sources.list.d')
 print('containing the single line:')
-print('   deb [trusted=yes] $REPO_URL termux extras')
+print('   deb [trusted=yes] $REPO_URL stable main')
 print('If the $REPO_URL is https, users must first install the apt-transport-https package')
