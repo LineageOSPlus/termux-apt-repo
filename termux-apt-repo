@@ -53,9 +53,8 @@ else:
 if not os.path.isdir(input_path):
     sys.exit("'" + input_path + '" does not exist')
 
-if os.path.exists(output_path):
-    shutil.rmtree(output_path)
-os.makedirs(component_path)
+if not os.path.exists(component_path):
+    os.makedirs(component_path)
 
 added_debs_count = 0
 for f in sorted(os.listdir(input_path)):
@@ -122,7 +121,7 @@ for arch in encountered_arches:
 
 release_file.close()
 
-if True:
+if False:
     print('Signing with gpg...')
     subprocess.check_call(['gpg --pinentry-mode loopback --digest-algo SHA256 --clearsign -o '
         + distribution_path + '/InRelease ' + distribution_path + '/Release'],
